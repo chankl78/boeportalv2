@@ -8,6 +8,7 @@
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
+    "format": "prettier --write --single-quote --no-semi './**/*.vue'",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
