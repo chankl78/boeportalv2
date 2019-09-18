@@ -48,6 +48,7 @@
     "*.{js,vue}": [
       "pretty-quick --staged",
       "eslint --fix",
+      "format",
       "git add"
     ]
   }
