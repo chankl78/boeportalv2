@@ -8,49 +8,61 @@ import VerifyEmail from '../pages/VerifyEmail'
 import NewPassword from '../pages/NewPassword'
 
 import Home from '../pages/dashboard/Home'
-import Profile from '../pages/dashboard/Profile'
+import Profile from '../pages/dashboard/profile/Profile'
 import Settings from '../pages/dashboard/Settings'
+
+import ChangePassword from '../pages/dashboard/profile/ChangePassword'
 
 const routes = [
   {
     path: '/login',
     component: LoginLayout,
-    children: [{
-      path: '',
-      component: Login
-    }]
+    children: [
+      {
+        path: '',
+        component: Login
+      }
+    ]
   },
   {
     path: '/register',
     component: LoginLayout,
-    children: [{
-      path: '',
-      component: Register
-    }]
+    children: [
+      {
+        path: '',
+        component: Register
+      }
+    ]
   },
   {
     path: '/reset-password',
     component: LoginLayout,
-    children: [{
-      path: '',
-      component: ResetPassword
-    }]
+    children: [
+      {
+        path: '',
+        component: ResetPassword
+      }
+    ]
   },
   {
     path: '/verify-email',
     component: LoginLayout,
-    children: [{
-      path: '',
-      component: VerifyEmail
-    }]
+    children: [
+      {
+        path: '',
+        component: VerifyEmail
+      }
+    ]
   },
   {
     path: '/new-password',
     component: LoginLayout,
-    children: [{
-      path: '',
-      component: NewPassword
-    }]
+    children: [
+      {
+        path: '',
+        component: NewPassword
+      }
+    ]
   },
   {
     path: '/',
@@ -70,6 +82,11 @@ const routes = [
         path: '/settings',
         name: 'settings',
         component: Settings
+      },
+      {
+        path: '/profile/change-password',
+        name: 'changePassword',
+        component: ChangePassword
       }
     ],
     meta: {
