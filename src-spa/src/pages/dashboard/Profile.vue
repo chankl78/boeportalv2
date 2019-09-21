@@ -1,9 +1,9 @@
 <template>
-    <q-page padding>
-        <div class="q-pa-md q-gutter-sm">
-          <p>PROFILE</p>
-        </div>
-    </q-page>
+  <q-page padding>
+    <div class="q-pa-md q-gutter-sm">
+      <p>PROFILE</p>
+    </div>
+  </q-page>
 </template>
 
 <script>

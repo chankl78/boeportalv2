@@ -8,7 +8,9 @@
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
-    "test": "echo \"No test specified\" && exit 0"
+    "format": "prettier --write --single-quote --no-semi './**/*.vue'",
+    "test": "echo \"No test specified\" && exit 0",
+    "precommit": "npm run test && lint-staged"
   },
   "dependencies": {
     "@quasar/cli": "^1.0.0",
@@ -16,6 +18,9 @@
     "@vue/cli": "^3.10.0",
     "axios": "^0.18.1",
     "core-js": "^2.6.9",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.2.5",
+    "pretty-quick": "^1.11.1",
     "quasar": "^1.0.5",
     "vee-validate": "^2.2.15",
     "vue-i18n": "^8.0.0",
@@ -27,7 +32,9 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.10.0",
     "eslint-loader": "^2.1.1",
-    "eslint-plugin-vue": "^5.0.0"
+    "eslint-plugin-vue": "^5.0.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "strip-ansi": "^3.0.1"
   },
   "engines": {
     "node": ">= 8.9.0",
@@ -36,5 +43,13 @@
   },
   "browserslist": [
     "last 1 version, not dead, ie >= 11"
-  ]
+  ],
+  "lint-staged": {
+    "*.{js,vue}": [
+      "pretty-quick --staged",
+      "eslint --fix",
+      "npm run format",
+      "git add"
+    ]
+  }
 }

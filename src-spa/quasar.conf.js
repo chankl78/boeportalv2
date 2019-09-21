@@ -90,7 +90,7 @@ module.exports = function (ctx) {
       env: {
         api: JSON.stringify(
           ctx.dev
-            ? 'http://localhost' // local dev env
+            ? 'http://localhost:8000' // local dev env
             : 'https://stagebackoffice.worldsoft.com.sg' // production end-point
         )
       }

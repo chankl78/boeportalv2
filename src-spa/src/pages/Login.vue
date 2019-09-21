@@ -10,7 +10,9 @@
               v-model="username"
               label="Username *"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || 'Username is required']"
+              :rules="[
+                val => (val && val.length > 0) || 'Username is required'
+              ]"
             ></q-input>
           </div>
         </div>
@@ -24,15 +26,22 @@
               type="password"
               lazy-rules
               :rules="[
-                val => val !== null && val !== '' || 'Password is required',
-                val => val && val.length > 4 || 'Min password length is 4 chars'
+                val => (val !== null && val !== '') || 'Password is required',
+                val =>
+                  (val && val.length > 4) || 'Min password length is 4 chars'
               ]"
             ></q-input>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <q-btn :loading="loginProgress" label=" Login " type="submit" color="primary" class="full-width q-mt-md">
+            <q-btn
+              :loading="loginProgress"
+              label=" Login "
+              type="submit"
+              color="primary"
+              class="full-width q-mt-md"
+            >
               <q-icon name="mdi-arrow-top-right-thick" />
               <template v-slot:loading>
                 SIGNING IN...
@@ -42,12 +51,24 @@
         </div>
         <div class="row">
           <div class="col-7">
-            <q-btn label=" Forget Password " color="primary" flat class="q-ml-sm justify-start" @click.prevent="resetPassword">
+            <q-btn
+              label=" Forget Password "
+              color="primary"
+              flat
+              class="q-ml-sm justify-start"
+              @click.prevent="resetPassword"
+            >
               <q-icon name="mdi-lock-reset" />
             </q-btn>
           </div>
           <div class="col-4">
-            <q-btn label=" Register " color="primary" flat class="q-ml-sm justify-end" @click.prevent="register" >
+            <q-btn
+              label=" Register "
+              color="primary"
+              flat
+              class="q-ml-sm justify-end"
+              @click.prevent="register"
+            >
               <q-icon name="mdi-account" />
             </q-btn>
           </div>
@@ -57,12 +78,11 @@
   </q-page>
 </template>
 
-<style>
-</style>
+<style></style>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       username: null,
       password: null,
@@ -71,13 +91,16 @@ export default {
     }
   },
   methods: {
-    login () {
+    login() {
       this.loginProgress = true
       let username = this.username
       let password = this.password
-      this.$store.dispatch('login', { username, password })
-        .then(() => { this.$router.push('/') })
-        .catch((error) => {
+      this.$store
+        .dispatch('login', { username, password })
+        .then(() => {
+          this.$router.push('/')
+        })
+        .catch(error => {
           if (error.response.status === 401) {
             this.$q.notify({
               color: 'negative',
@@ -98,10 +121,10 @@ export default {
           this.loginProgress = false
         })
     },
-    register () {
+    register() {
       this.$router.push('/register')
     },
-    resetPassword () {
+    resetPassword() {
       this.$router.push('/reset-password')
     }
   }

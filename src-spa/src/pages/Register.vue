@@ -1,7 +1,11 @@
 <template>
   <q-page class="flex flex-center">
     <div class="q-pa-md full-width" style="max-width: 400px">
-      <q-form ref="formMain" @submit.prevent="handleRegister" class="q-gutter-md">
+      <q-form
+        ref="formMain"
+        @submit.prevent="handleRegister"
+        class="q-gutter-md"
+      >
         <div class="row">
           <div class="col">
             <q-input
@@ -53,17 +57,29 @@
         </div>
         <div class="row">
           <div class="col">
-            <q-btn :loading="registerProgress" label=" Register " type="submit" color="primary" class="full-width q-mt-md">
+            <q-btn
+              :loading="registerProgress"
+              label=" Register "
+              type="submit"
+              color="primary"
+              class="full-width q-mt-md"
+            >
               <q-icon name="mdi-arrow-top-right-thick" />
               <template v-slot:loading>
-                  PROCESSING...
+                PROCESSING...
               </template>
             </q-btn>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <q-btn label=" Login " color="primary" flat class="full-width q-mt-md" @click.prevent="login" >
+            <q-btn
+              label=" Login "
+              color="primary"
+              flat
+              class="full-width q-mt-md"
+              @click.prevent="login"
+            >
               <q-icon name="mdi-account" />
             </q-btn>
           </div>
@@ -76,7 +92,7 @@
 <script>
 export default {
   name: 'Register',
-  data () {
+  data() {
     return {
       username: '',
       email: '',
@@ -86,50 +102,54 @@ export default {
     }
   },
   methods: {
-    handleRegister () {
+    handleRegister() {
       let data = {
         email: this.email,
         password: this.password,
         password_confirmation: this.passwordRepeat
       }
-      this.$validator.validateAll().then((isValid) => {
-        this.registerProgress = true
-        this.$store.dispatch('register', data)
-          .then((resp) => {
-            this.registerProgress = false
-            this.$q.notify({
-              color: 'positive',
-              position: 'top',
-              message: resp.data.message
+      this.$validator
+        .validateAll()
+        .then(isValid => {
+          this.registerProgress = true
+          this.$store
+            .dispatch('register', data)
+            .then(resp => {
+              this.registerProgress = false
+              this.$q.notify({
+                color: 'positive',
+                position: 'top',
+                message: resp.data.message
+              })
+              this.$router.push('/login')
             })
-            this.$router.push('/login')
-          })
-          .catch((err) => {
-            this.registerProgress = false
-            let messages = err.response.data.message
-            if (err.response.data.errors) {
-              messages = []
-              for (let error in err.response.data.errors) {
-                messages.push(err.response.data.errors[error][0])
+            .catch(err => {
+              this.registerProgress = false
+              let messages = err.response.data.message
+              if (err.response.data.errors) {
+                messages = []
+                for (let error in err.response.data.errors) {
+                  messages.push(err.response.data.errors[error][0])
+                }
               }
-            }
-            this.$q.notify({
-              color: 'negative',
-              position: 'top',
-              message: messages,
-              icon: 'report_problem'
+              this.$q.notify({
+                color: 'negative',
+                position: 'top',
+                message: messages,
+                icon: 'report_problem'
+              })
             })
-          })
-      }).catch(() => {
-        this.$q.notify({
-          color: 'negative',
-          position: 'top',
-          message: this.errors.all() || 'Unable to register user',
-          icon: 'report_problem'
         })
-      })
+        .catch(() => {
+          this.$q.notify({
+            color: 'negative',
+            position: 'top',
+            message: this.errors.all() || 'Unable to register user',
+            icon: 'report_problem'
+          })
+        })
     },
-    login () {
+    login() {
       this.$router.push('/login')
     }
   }

@@ -1,13 +1,12 @@
 <template>
   <q-layout view="hHh lpR fFf">
-
     <q-header reveal elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="drawerLeft = !drawerLeft" />
 
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
           </q-avatar>
           Title
         </q-toolbar-title>
@@ -15,12 +14,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="drawerLeft"
-      side="left"
-      elevated
-      show-if-above
-    >
+    <q-drawer v-model="drawerLeft" side="left" elevated show-if-above>
       <q-scroll-area class="fit">
         <q-list v-for="(menuItem, index) in menuList" :key="index">
           <q-item clickable :to="{ name: menuItem.to }" v-ripple exact>
@@ -50,19 +44,18 @@
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
           </q-avatar>
           SSASoft - Backoffice
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
-
   </q-layout>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       drawerLeft: true,
       menuList: [
@@ -87,19 +80,24 @@ export default {
       ]
     }
   },
-  created () {
-    this.$store.dispatch('dashboardLoad').then((resp) => {
-      if (resp.status === 401) {
+  created() {
+    this.$store
+      .dispatch('dashboardLoad')
+      .then(resp => {
+        if (resp.status === 401) {
+          this.$router.push('/login')
+        }
+      })
+      .catch(err => {
+        console.log(err)
         this.$router.push('/login')
-      }
-    }).catch((err) => {
-      console.log(err)
-      this.$router.push('/login')
-    })
+      })
   },
   methods: {
-    logout () {
-      this.$store.dispatch('logout').then(() => { this.$router.push('/login') })
+    logout() {
+      this.$store.dispatch('logout').then(() => {
+        this.$router.push('/login')
+      })
     }
   }
 }
