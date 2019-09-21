@@ -25,11 +25,19 @@
         />
         <div class="button-wrapper">
           <q-btn
+            label="Back"
+            color="primary"
+            class="float-left"
+            @click="$router.push({name: 'profile'})"
+          />
+        </div>
+        <div class="button-wrapper">
+          <q-btn
             label="Submit"
             :disable="$v.$invalid"
             color="primary"
             data-testid="submit-button"
-            class="scg-send float-right"
+            class="float-right"
             @click="changePassword"
           />
         </div>
