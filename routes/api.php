@@ -29,7 +29,8 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('profile')->group(function () {
     Route::group(['middleware' => 'auth:api'], function() {
-        Route::post('avatar', 'Api\Profile\AvatarController@store')->name('uploadAvatar');
+        Route::post('avatar', 'Api\Profile\AvatarController@store');
+        Route::delete('avatar', 'Api\Profile\AvatarController@destroy');
     });
 });
 

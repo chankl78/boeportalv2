@@ -34,7 +34,7 @@ class AvatarController extends Controller
         $path = $request->file('avatar')->store('avatars');
         $user = Auth::user();
 
-        if (file_exists(storage_path())) {
+        if (file_exists(storage_path('app/public/'.$user->avatar)) && $user->avatar !== 'avatars/default.png') {
             Storage::delete($user->avatar);
         }
 
@@ -47,5 +47,23 @@ class AvatarController extends Controller
             'status' => 'success',
             "message" => 'Uploaded Successfully!'
         ], 200);
+    }
+
+    public function destroy() 
+    {
+        $user = Auth::user();
+
+        if (file_exists(storage_path('app/public/'.$user->avatar)) && $user->avatar !== 'avatars/default.png') {
+            Storage::delete($user->avatar);
+        }
+
+        $user->avatar = 'avatars/default.png';
+        $user->save();
+
+        return response()->json([
+            'status' => 'success',
+            "message" => 'Deleted Successfully!'
+        ], 200);
+        
     }
 }
