@@ -21,6 +21,7 @@ Route::prefix('auth')->group(function () {
     Route::get('reset', 'Api\ResetPasswordController@reset')->name('password.reset');
 
     Route::group(['middleware' => 'auth:api'], function() {
+        Route::post('change-password', 'Api\AuthController@changePassword')->name('changePassword');
         Route::get('user', 'Api\AuthController@user');
         Route::post('logout', 'Api\AuthController@logout');
     });
