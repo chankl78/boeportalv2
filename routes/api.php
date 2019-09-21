@@ -27,6 +27,13 @@ Route::prefix('auth')->group(function () {
     });
 });
 
+Route::prefix('profile')->group(function () {
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::post('avatar', 'Api\Profile\AvatarController@store');
+        Route::delete('avatar', 'Api\Profile\AvatarController@destroy');
+    });
+});
+
 Route::prefix('data')->group(function () {
     Route::middleware(['auth:api', 'verified'])->group(function() {
         Route::get('default', 'Api\Data\MainController@index');
