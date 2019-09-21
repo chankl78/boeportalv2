@@ -131,4 +131,36 @@ class AuthController extends Controller
     {
         return Auth::guard();
     }
+
+    public function changePassword(Request $request) {
+        if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
+            return response()->json(["status" => "error", "message" => "Your current password does not matches with the password you provided. Please try again."], 400);
+        }
+
+        if(strcmp($request->get('current_password'), $request->get('new-password')) == 0){
+            return response()
+            ->json(["status" => "error", "message" => "New Password cannot be same as your current password. Please choose a different password."], 400);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:6|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+        
+        $user = Auth::user();
+        $user->password = Hash::make($request->get('new_password'));
+        $user->save();
+
+        $this->logger->info('[Change Password] User change password successfully!');
+
+        return response()->json(["status" => "success", "message" => "Password changed successfully!"], 200);
+    }
+
 }
