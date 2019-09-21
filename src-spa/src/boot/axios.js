@@ -6,17 +6,36 @@ export default async ({ Vue }) => {
 
   const token = localStorage.getItem('token')
   if (token) {
-    Vue.prototype.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+    Vue.prototype.$axios.defaults.headers.common['Authorization'] =
+      'Bearer ' + token
   }
+
+  axios.interceptors.request.use(
+    config => {
+      let token = localStorage.getItem('authtoken')
+
+      if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`
+      }
+
+      return config
+    },
+
+    error => {
+      return Promise.reject(error)
+    }
+  )
 
   const baseURL = process.env.api
   console.log('BASE URL:' + baseURL)
   if (typeof baseURL !== 'undefined') {
     Vue.prototype.$axios.defaults.baseURL = baseURL
   }
-  Vue.prototype.$axios.interceptors.response.use(undefined, function (err) {
-    return new Promise(function (resolve, reject) {
-      if (err.status === 401/* && err.config && !err.config.__isRetryRequest */) {
+  Vue.prototype.$axios.interceptors.response.use(undefined, function(err) {
+    return new Promise(function(resolve, reject) {
+      if (
+        err.status === 401 /* && err.config && !err.config.__isRetryRequest */
+      ) {
         store.dispatch('logout')
       }
       throw err
