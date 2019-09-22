@@ -27,6 +27,11 @@ class AccessmUser extends AuthenticatableUser implements AuthenticatableContract
     protected $hidden = ['password', 'remember_token'];
     protected $casts = ['email_verified_at' => 'datetime'];
 
+    public function member()
+    {
+        return $this->hasOne('App\Models\MembersmSSA', 'id', 'memberid');
+    }
+
     public function getEmailForPasswordReset()
     {
         return $this->username;

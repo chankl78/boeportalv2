@@ -31,6 +31,8 @@ Route::prefix('profile')->group(function () {
     Route::group(['middleware' => 'auth:api'], function() {
         Route::post('avatar', 'Api\Profile\AvatarController@store');
         Route::delete('avatar', 'Api\Profile\AvatarController@destroy');
+        Route::apiResource('member', 'Api\Profile\MemberInfoController')->only(["show"]);
+        Route::apiResource('user', 'Api\Profile\UserInfoController')->only(["store", "show"]);
     });
 });
 
