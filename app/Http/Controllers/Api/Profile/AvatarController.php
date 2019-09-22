@@ -49,7 +49,7 @@ class AvatarController extends Controller
         ], 200);
     }
 
-    public function destroy() 
+    public function destroy(): JsonResponse
     {
         $user = Auth::user();
 
