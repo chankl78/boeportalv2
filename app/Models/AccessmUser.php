@@ -72,4 +72,9 @@ class AccessmUser extends AuthenticatableUser implements AuthenticatableContract
     {
         return [];
     }
+
+    public function getAvatarAttribute($value)
+    {
+        return asset('storage/'.$value);
+    }
 }
