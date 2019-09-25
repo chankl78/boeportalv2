@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Services\BackofficeqLoggerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
+use App\Models\AccessmUser;
 
 class AvatarController extends Controller
 {
@@ -18,12 +19,21 @@ class AvatarController extends Controller
         $this->logger = $logger;
     }
 
-    public function store(Request $request): JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $user = AccessmUser::find($id);
+
+        if(!$user){
+            return response()->json([
+                "status" => "error",
+                "message" => "No such user!"
+            ]); 
+        }
+       
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
@@ -32,10 +42,10 @@ class AvatarController extends Controller
         }
 
         $path = $request->file('avatar')->store('avatars');
-        $user = Auth::user();
+        $originalAvatar = $user->getOriginal('avatar');
 
-        if (file_exists(storage_path('app/public/'.$user->avatar)) && $user->avatar !== 'avatars/default.png') {
-            Storage::delete($user->avatar);
+        if (file_exists(storage_path('app/public/'.$originalAvatar)) && $originalAvatar !== 'avatars/default.png') {
+            Storage::delete($originalAvatar);
         }
 
         $user->avatar = $path;
@@ -49,12 +59,21 @@ class AvatarController extends Controller
         ], 200);
     }
 
-    public function destroy(): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
-        $user = Auth::user();
+        $user = AccessmUser::find($id);
 
-        if (file_exists(storage_path('app/public/'.$user->avatar)) && $user->avatar !== 'avatars/default.png') {
-            Storage::delete($user->avatar);
+        if(!$user){
+            return response()->json([
+                "status" => "error",
+                "message" => "No such user!"
+            ]); 
+        }
+
+        $originalAvatar = $user->getOriginal('avatar');
+
+        if (file_exists(storage_path('app/public/'.$originalAvatar)) && $originalAvatar !== 'avatars/default.png') {
+            Storage::delete($originalAvatar);
         }
 
         $user->avatar = 'avatars/default.png';
