@@ -26,20 +26,29 @@ class MemberInfoController extends Controller
             ]);
         }
         try{
-            $member = AccessmUser::find($id)->member->only([
+            $member = AccessmUser::find($id)->member;
+            $data = $member->only([
+                "name",
+                "chinesename",
+                "dateofbirth",
                 "rhq",
                 "zone",
+                "gender",
                 "Chapter",
                 "District",
                 "Position",
-                "Division"
+                "Division",
             ]);
+
+            $data["countryofbirth"] = $member->countryOfBirth->value;
+            $data["nationality"] = $member->nationalityTable->value;
 
             return response()->json([
                 "status" => "success",
-                "data" => $member
+                "data" => $data
             ]);
         } catch(\Throwable $t) {
+            dd($t);
             return response()->json([
                 "status" => "error",
                 "message" => "No such SSA member!"
