@@ -48,7 +48,6 @@ class MemberInfoController extends Controller
                 "data" => $data
             ]);
         } catch(\Throwable $t) {
-            dd($t);
             return response()->json([
                 "status" => "error",
                 "message" => "No such SSA member!"
