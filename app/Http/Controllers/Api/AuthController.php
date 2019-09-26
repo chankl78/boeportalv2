@@ -38,7 +38,6 @@ class AuthController extends Controller
             ], 422);
         }
 
-        try {
             $user = new AccessmUser();
             $user->name = $request->email;
             $user->email = $request->email;
@@ -58,14 +57,6 @@ class AuthController extends Controller
                 'status' => 200,
                 'message' => 'Successfully created a new account. Please check your email and activate your account.',
             ], 200);
-        } catch (\Exception $exception) {
-            $this->logger->warning('[Registration] Unable to register user.');
-
-            return response()->json([
-                'status' => '',
-                'message' => 'Unable to register user.'
-            ], 401);
-        }
     }
 
     public function login(Request $request)
@@ -77,9 +68,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'user' => [
-                    'username' => Auth::user()->user,
-                ]
+                'user' => Auth::user()
             ], 200)->header('Authorization', $token);
         }
 
@@ -153,7 +142,7 @@ class AuthController extends Controller
                 'errors' => $validator->errors(),
             ], 422);
         }
-        
+
         $user = Auth::user();
         $user->password = Hash::make($request->get('new_password'));
         $user->save();
