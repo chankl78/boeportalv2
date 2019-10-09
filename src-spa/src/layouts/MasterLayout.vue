@@ -2,15 +2,15 @@
   <q-layout view="hHh lpR fFf">
     <q-header reveal elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="drawerLeft = !drawerLeft" />
+        <q-btn dense flat round icon="menu" @click="drawerLeft = !drawerLeft"/>
 
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
+            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
           </q-avatar>
-          Title
+          {{$route.name.toUpperCase()}}
         </q-toolbar-title>
-        <q-btn stretch flat label="Logout" @click.prevent="logout" />
+        <q-btn stretch flat label="Logout" @click.prevent="logout"/>
       </q-toolbar>
     </q-header>
 
@@ -19,16 +19,16 @@
         <q-list v-for="(menuItem, index) in menuList" :key="index">
           <q-item clickable :to="{ name: menuItem.to }" v-ripple exact>
             <q-item-section avatar>
-              <q-icon :name="menuItem.icon" />
+              <q-icon :name="menuItem.icon"/>
             </q-item-section>
             <q-item-section>{{ menuItem.label }}</q-item-section>
           </q-item>
-          <q-separator v-if="menuItem.separator" />
+          <q-separator v-if="menuItem.separator"/>
         </q-list>
         <q-list>
           <q-item clickable @click="logout" v-ripple>
             <q-item-section avatar>
-              <q-icon :name="'mdi-logout'" />
+              <q-icon :name="'mdi-logout'"/>
             </q-item-section>
             <q-item-section>Logout</q-item-section>
           </q-item>
@@ -37,16 +37,15 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
 
     <q-footer reveal elevated class="bg-grey-8 text-white">
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
-          </q-avatar>
-          SSASoft - Backoffice
+            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+          </q-avatar>SSASoft - Backoffice
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>

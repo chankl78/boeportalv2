@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
-    <div class="q-pa-md q-gutter-sm">
-      <div class="fields">
+    <div class="q-pa-md q-gutter-sm row justify-center items-center">
+      <div class="fields col-lg-5 col-xs-12 col-sm-8">
         <FormField
           v-model="oldPass"
           label="Old Password"

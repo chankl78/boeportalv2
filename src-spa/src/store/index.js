@@ -25,10 +25,11 @@ const Store = new Vuex.Store({
     auth_request(state) {
       state.status = 'loading'
     },
-    auth_success(state, token, user) {
+    auth_success(state, payload) {
       state.status = 'success'
-      state.token = token
-      state.user = user
+      state.token = payload.token
+      console.log(payload.user)
+      state.user = payload.user
     },
     auth_error(state) {
       state.status = 'error'
@@ -52,7 +53,7 @@ const Store = new Vuex.Store({
     }
   },
   actions: {
-    login({ commit }, user) {
+    login({ state, commit }, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
         axios
@@ -62,8 +63,9 @@ const Store = new Vuex.Store({
               const token = response.headers.authorization
               const user = response.data.user
               localStorage.setItem('token', token)
-              commit('auth_success', token, user)
+              commit('auth_success', { token, user })
               axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+              console.log(state)
               resolve(response)
             }
           })

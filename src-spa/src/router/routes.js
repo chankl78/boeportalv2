@@ -12,6 +12,7 @@ import Profile from '../pages/dashboard/profile/Profile'
 import Settings from '../pages/dashboard/Settings'
 
 import ChangePassword from '../pages/dashboard/profile/ChangePassword'
+import ChangeInfo from '../pages/dashboard/profile/ChangeInfo'
 
 const routes = [
   {
@@ -87,6 +88,11 @@ const routes = [
         path: '/profile/change-password',
         name: 'changePassword',
         component: ChangePassword
+      },
+      {
+        path: '/profile/change-info',
+        name: 'changeInfo',
+        component: ChangeInfo
       }
     ],
     meta: {
